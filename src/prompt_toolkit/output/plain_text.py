@@ -130,6 +130,12 @@ class PlainTextOutput(Output):
     def disable_bracketed_paste(self) -> None:
         pass
 
+    def enable_modify_other_keys(self) -> None:
+        pass
+
+    def disable_modify_other_keys(self) -> None:
+        pass
+
     def scroll_buffer_to_prompt(self) -> None:
         pass
 

@@ -123,6 +123,13 @@ class Keys(str, Enum):
 
     BackTab = "s-tab"  # shift + tab
 
+    # Modified Enter keys. Only distinguishable from plain Enter when the
+    # terminal has the xterm `modifyOtherKeys` protocol (or equivalent)
+    # enabled — otherwise the terminal sends plain '\r' for all of these.
+    ShiftEnter = "s-enter"
+    ControlEnter = "c-enter"
+    ControlShiftEnter = "c-s-enter"
+
     F1 = "f1"
     F2 = "f2"
     F3 = "f3"

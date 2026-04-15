@@ -187,6 +187,16 @@ class Output(metaclass=ABCMeta):
     def disable_bracketed_paste(self) -> None:
         "For vt100 only."
 
+    def enable_modify_other_keys(self) -> None:
+        """
+        For vt100 only. Enable the xterm "modifyOtherKeys" protocol (mode 2)
+        so the terminal disambiguates modified keys like Ctrl-Enter from
+        their unmodified counterparts.
+        """
+
+    def disable_modify_other_keys(self) -> None:
+        "For vt100 only."
+
     def reset_cursor_key_mode(self) -> None:
         """
         For vt100 only.

@@ -362,6 +362,7 @@ class Renderer:
         self._in_alternate_screen = False
         self._mouse_support_enabled = False
         self._bracketed_paste_enabled = False
+        self._modify_other_keys_enabled = False
         self._cursor_key_mode_reset = False
 
         # Future set when we are waiting for a CPR flag.
@@ -420,6 +421,12 @@ class Renderer:
         if self._bracketed_paste_enabled:
             self.output.disable_bracketed_paste()
             self._bracketed_paste_enabled = False
+
+        # Disable modifyOtherKeys, so that the terminal returns to its
+        # default Enter/Tab/Backspace behavior for the next program.
+        if self._modify_other_keys_enabled:
+            self.output.disable_modify_other_keys()
+            self._modify_other_keys_enabled = False
 
         self.output.reset_cursor_shape()
         self.output.show_cursor()
@@ -608,6 +615,13 @@ class Renderer:
         if not self._bracketed_paste_enabled:
             self.output.enable_bracketed_paste()
             self._bracketed_paste_enabled = True
+
+        # Enable xterm modifyOtherKeys so modified keys like Ctrl-Enter,
+        # Shift-Enter are sent as distinct CSI 27 sequences. Terminals that
+        # don't support this silently ignore the request.
+        if not self._modify_other_keys_enabled:
+            self.output.enable_modify_other_keys()
+            self._modify_other_keys_enabled = True
 
         # Reset cursor key mode.
         if not self._cursor_key_mode_reset:

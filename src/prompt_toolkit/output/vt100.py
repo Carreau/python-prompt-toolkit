@@ -611,6 +611,17 @@ class Vt100_Output(Output):
     def disable_bracketed_paste(self) -> None:
         self.write_raw("\x1b[?2004l")
 
+    def enable_modify_other_keys(self) -> None:
+        # xterm "modifyOtherKeys" resource, level 2: send a CSI 27 sequence
+        # for any modified key that would otherwise be ambiguous (e.g. send
+        # distinct sequences for Enter / Ctrl-Enter / Shift-Enter).
+        # Ref: https://invisible-island.net/xterm/modified-keys.html
+        self.write_raw("\x1b[>4;2m")
+
+    def disable_modify_other_keys(self) -> None:
+        # Reset modifyOtherKeys to the terminal's default.
+        self.write_raw("\x1b[>4m")
+
     def reset_cursor_key_mode(self) -> None:
         """
         For vt100 only.
